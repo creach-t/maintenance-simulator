@@ -6,13 +6,13 @@
  */
 
 /* Reset et styles de base */
-.offres-simulator * {
+.maintenance-simulator * {
     box-sizing: border-box;
     margin: 0;
     padding: 0;
 }
 
-.offres-simulator {
+.maintenance-simulator {
     font-family: 'Helvetica Neue', Arial, sans-serif;
     color: #333;
     width: 100%;
@@ -163,7 +163,7 @@
 
 /* Styles responsifs */
 @media (max-width: 600px) {
-    .offres-simulator {
+    .maintenance-simulator {
         padding: 10px;
     }
     
