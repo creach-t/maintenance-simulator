@@ -59,6 +59,83 @@
     opacity: 0.9;
 }
 
+/* Styles pour la page d'introduction */
+.intro-slide {
+    display: none;
+    animation: fadeIn 0.5s;
+}
+
+.intro-slide.active {
+    display: block;
+}
+
+.intro-content {
+    padding: 30px;
+    text-align: center;
+}
+
+.intro-icon {
+    background-color: rgba(0, 182, 145, 0.1);
+    border-radius: 50%;
+    display: flex;
+    height: 100px;
+    width: 100px;
+    margin: 0 auto 25px;
+    justify-content: center;
+    align-items: center;
+}
+
+.intro-emoji {
+    font-size: 50px;
+}
+
+.intro-content h3 {
+    color: #005040;
+    font-size: 24px;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+.intro-content p {
+    color: #555;
+    font-size: 16px;
+    line-height: 1.6;
+    margin-bottom: 25px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.intro-benefits {
+    list-style-type: none;
+    margin: 0 auto 30px;
+    max-width: 400px;
+    text-align: left;
+}
+
+.intro-benefits li {
+    color: #333;
+    font-size: 16px;
+    padding: 8px 0;
+    position: relative;
+}
+
+.start-container {
+    margin-top: 30px;
+}
+
+.start-btn {
+    font-size: 18px;
+    padding: 14px 30px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.start-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
 /* Barre de progression */
 .simulator-progress {
     padding: 20px 30px 20px;
@@ -377,6 +454,20 @@
     
     .simulator-header h2 {
         font-size: 22px;
+    }
+    
+    .intro-content h3 {
+        font-size: 20px;
+    }
+    
+    .intro-content p, .intro-benefits li {
+        font-size: 15px;
+    }
+    
+    .start-btn {
+        font-size: 16px;
+        padding: 12px 24px;
+        width: 100%;
     }
     
     .question-content h3 {
