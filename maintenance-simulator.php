@@ -4,7 +4,7 @@
  * Plugin URI: https://github.com/creach-t/maintenance-simulator
  * Description: Un simulateur interactif pour recommander une formule de maintenance web adaptée aux besoins de l'utilisateur.
  * Version: 1.0.0
- * Author: Développé sur mesure
+ * Author: Créac'h Théo
  * Author URI: https://github.com/creach-t
  * Text Domain: maintenance-simulator
  * Domain Path: /languages
