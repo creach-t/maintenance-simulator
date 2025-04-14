@@ -12,15 +12,39 @@
 if (!defined('ABSPATH')) {
     exit;
 }
-?>
+?> 
 <div id="maintenance-simulator" class="maintenance-simulator">
     <div class="simulator-container">
-        <div class="simulator-header">
-            <h2><?php _e('Simulateur de maintenance web', 'maintenance-simulator'); ?></h2>
-            <p><?php _e('Répondez à ces 6 questions pour obtenir notre recommandation personnalisée', 'maintenance-simulator'); ?></p>
+        <!-- Page d'accueil / introduction -->
+        <div class="intro-slide active">
+            <div class="simulator-header">
+                <h2><?php _e('Simulateur de maintenance web', 'maintenance-simulator'); ?></h2>
+                <p><?php _e('Découvrez la formule de maintenance adaptée à vos besoins', 'maintenance-simulator'); ?></p>
+            </div>
+
+            <div class="intro-content">
+                <div class="intro-icon">
+                    <span class="intro-emoji">🔍</span>
+                </div>
+                
+                <h3><?php _e('Besoin de savoir quelle formule de maintenance vous convient ?', 'maintenance-simulator'); ?></h3>
+                
+                <p><?php _e('En répondant à 6 questions simples, nous pourrons vous recommander la solution de maintenance la plus adaptée à votre site web et à vos besoins spécifiques.', 'maintenance-simulator'); ?></p>
+                
+                <ul class="intro-benefits">
+                    <li><?php _e('✓ Rapide : moins de 2 minutes', 'maintenance-simulator'); ?></li>
+                    <li><?php _e('✓ Personnalisé selon vos réponses', 'maintenance-simulator'); ?></li>
+                    <li><?php _e('✓ Sans engagement', 'maintenance-simulator'); ?></li>
+                </ul>
+                
+                <div class="start-container">
+                    <button type="button" class="btn start-btn"><?php _e('Démarrer la simulation', 'maintenance-simulator'); ?></button>
+                </div>
+            </div>
         </div>
 
-        <div class="simulator-progress">
+        <!-- Barre de progression (cachée au départ) -->
+        <div class="simulator-progress" style="display: none;">
             <div class="progress-bar">
                 <div class="progress-indicator" style="width: 0%"></div>
             </div>
@@ -29,7 +53,7 @@ if (!defined('ABSPATH')) {
 
         <form id="simulator-form" class="simulator-form">
             <!-- Question 1 -->
-            <div class="question-slide active" data-question="1">
+            <div class="question-slide" data-question="1">
                 <div class="question-content">
                     <h3><?php _e('Question 1', 'maintenance-simulator'); ?></h3>
                     <p><?php _e('Combien de demandes de modification avez-vous en moyenne chaque mois ?', 'maintenance-simulator'); ?></p>
