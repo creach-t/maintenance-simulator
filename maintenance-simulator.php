@@ -3,7 +3,7 @@
  * Plugin Name: Simulateur de Maintenance Web
  * Plugin URI: https://github.com/creach-t/maintenance-simulator
  * Description: Un simulateur interactif pour recommander une formule de maintenance web adaptée aux besoins de l'utilisateur.
- * Version: 1.0.1
+ * Version: 1.0.2
  * Author: Créac'h Théo
  * Author URI: https://github.com/creach-t
  * Text Domain: maintenance-simulator
@@ -20,7 +20,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Définition des constantes du plugin
-define('MAINTENANCE_SIMULATOR_VERSION', '1.0.1'); // Incrément de version pour forcer le rechargement des assets
+define('MAINTENANCE_SIMULATOR_VERSION', '1.0.2'); // Incrément de version pour forcer le rechargement des assets
 define('MAINTENANCE_SIMULATOR_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('MAINTENANCE_SIMULATOR_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('MAINTENANCE_SIMULATOR_PLUGIN_BASENAME', plugin_basename(__FILE__));
@@ -96,11 +96,19 @@ class Maintenance_Simulator {
         // S'assurer que jQuery est chargé
         wp_enqueue_script('jquery');
         
+        // Charger Google Fonts - Montserrat
+        wp_enqueue_style(
+            'montserrat-font',
+            'https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap',
+            array(),
+            null
+        );
+        
         // Styles CSS avec version random pour éviter la mise en cache
         wp_enqueue_style(
             'maintenance-simulator-css',
             MAINTENANCE_SIMULATOR_PLUGIN_URL . 'assets/css/simulator.css',
-            array(),
+            array('montserrat-font'),
             MAINTENANCE_SIMULATOR_VERSION . '.' . rand(1, 1000) // Ajouter un nombre aléatoire pour éviter la mise en cache
         );
         
