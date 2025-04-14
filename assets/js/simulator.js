@@ -22,16 +22,28 @@
         const $simulator = $('#maintenance-simulator');
         const $form = $('#simulator-form');
         const $slides = $('.question-slide');
+        const $introSlide = $('.intro-slide');
         const $resultSlide = $('.result-slide');
         const $progressIndicator = $('.progress-indicator');
         const $currentStep = $('.current-step');
+        const $progressBar = $('.simulator-progress');
         const totalSteps = $slides.length;
         let currentStep = 1;
         
         // Débogage - Vérifier les éléments du DOM
         console.log('Simulateur trouvé:', $simulator.length);
+        console.log('Introduction trouvée:', $introSlide.length);
         console.log('Questions trouvées:', $slides.length);
         console.log('Boutons suivants trouvés:', $('.next-btn').length);
+        
+        // Fonction pour démarrer le simulateur depuis la page d'introduction
+        function startSimulation() {
+            console.log('Démarrage de la simulation');
+            $introSlide.removeClass('active');
+            $progressBar.show(); // Afficher la barre de progression
+            $(`.question-slide[data-question="1"]`).addClass('active');
+            updateProgress();
+        }
         
         // Mise à jour de la barre de progression
         function updateProgress() {
@@ -248,10 +260,13 @@
             // Réinitialiser les champs du formulaire
             $form[0].reset();
             
-            // Masquer l'écran de résultat et afficher la première question
+            // Masquer l'écran de résultat et afficher la première l'introduction
             $resultSlide.removeClass('active');
             $slides.removeClass('active');
-            $(`.question-slide[data-question="1"]`).addClass('active');
+            $introSlide.addClass('active');
+            
+            // Cacher la barre de progression
+            $progressBar.hide();
             
             // Réinitialiser les variables
             currentStep = 1;
@@ -272,6 +287,13 @@
         
         // Attachement des gestionnaires d'événements
         console.log('Attachement des gestionnaires d\'événements');
+        
+        // Gestionnaire pour le bouton de démarrage
+        $simulator.on('click', '.start-btn', function(e) {
+            e.preventDefault();
+            console.log('Bouton de démarrage cliqué');
+            startSimulation();
+        });
         
         // Utiliser une délégation d'événement pour résoudre les problèmes potentiels de liaison
         $simulator.on('click', '.next-btn', function(e) {
@@ -331,6 +353,8 @@
         });
         
         // Initialisation
+        // Cacher la barre de progression au départ
+        $progressBar.hide();
         updateProgress();
         console.log('Initialisation terminée');
     });
