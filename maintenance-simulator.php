@@ -3,7 +3,7 @@
  * Plugin Name: Simulateur de Maintenance Web
  * Plugin URI: https://github.com/creach-t/maintenance-simulator
  * Description: Un simulateur interactif pour recommander une formule de maintenance web adaptée aux besoins de l'utilisateur.
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: Créac'h Théo
  * Author URI: https://github.com/creach-t
  * Text Domain: maintenance-simulator
@@ -20,7 +20,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Définition des constantes du plugin
-define('MAINTENANCE_SIMULATOR_VERSION', '1.0.0');
+define('MAINTENANCE_SIMULATOR_VERSION', '1.0.1'); // Incrément de version pour forcer le rechargement des assets
 define('MAINTENANCE_SIMULATOR_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('MAINTENANCE_SIMULATOR_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('MAINTENANCE_SIMULATOR_PLUGIN_BASENAME', plugin_basename(__FILE__));
@@ -73,6 +73,9 @@ class Maintenance_Simulator {
         // Pour l'instant, rien de particulier à faire lors de l'activation
         // Mais on pourrait ajouter des options par défaut, créer des tables, etc.
         flush_rewrite_rules(); // Vider le cache des règles de réécriture
+        
+        // Journaliser l'activation
+        error_log('Activation du plugin Maintenance Simulator');
     }
     
     /**
@@ -81,26 +84,32 @@ class Maintenance_Simulator {
     public function deactivate() {
         // Pour l'instant, rien de particulier à faire lors de la désactivation
         flush_rewrite_rules(); // Vider le cache des règles de réécriture
+        
+        // Journaliser la désactivation
+        error_log('Désactivation du plugin Maintenance Simulator');
     }
     
     /**
      * Enregistre et charge les fichiers CSS et JS nécessaires
      */
     public function enqueue_assets() {
-        // Styles CSS
+        // S'assurer que jQuery est chargé
+        wp_enqueue_script('jquery');
+        
+        // Styles CSS avec version random pour éviter la mise en cache
         wp_enqueue_style(
             'maintenance-simulator-css',
             MAINTENANCE_SIMULATOR_PLUGIN_URL . 'assets/css/simulator.css',
             array(),
-            MAINTENANCE_SIMULATOR_VERSION
+            MAINTENANCE_SIMULATOR_VERSION . '.' . rand(1, 1000) // Ajouter un nombre aléatoire pour éviter la mise en cache
         );
         
-        // Script JavaScript
+        // Script JavaScript avec version random pour éviter la mise en cache
         wp_enqueue_script(
             'maintenance-simulator-js',
             MAINTENANCE_SIMULATOR_PLUGIN_URL . 'assets/js/simulator.js',
             array('jquery'),
-            MAINTENANCE_SIMULATOR_VERSION,
+            MAINTENANCE_SIMULATOR_VERSION . '.' . rand(1, 1000), // Ajouter un nombre aléatoire pour éviter la mise en cache
             true
         );
         
@@ -120,6 +129,9 @@ class Maintenance_Simulator {
                 )
             )
         );
+        
+        // Journaliser le chargement des assets
+        error_log('Chargement des assets du plugin Maintenance Simulator: CSS et JS');
     }
     
     /**
@@ -128,6 +140,12 @@ class Maintenance_Simulator {
      * @return string Le HTML du simulateur
      */
     public function render_simulator() {
+        // Journaliser l'utilisation du shortcode
+        error_log('Rendu du simulateur via shortcode');
+        
+        // Assurons-nous que les assets sont bien chargés
+        $this->enqueue_assets();
+        
         ob_start();
         include(MAINTENANCE_SIMULATOR_PLUGIN_DIR . 'templates/simulator-template.php');
         return ob_get_clean();
@@ -137,8 +155,12 @@ class Maintenance_Simulator {
      * Traitement de la soumission du formulaire
      */
     public function process_form_submission() {
+        // Journaliser la soumission du formulaire
+        error_log('Soumission du formulaire reçue: ' . print_r($_POST, true));
+        
         // Vérification du nonce pour la sécurité
         if (!isset($_POST['nonce']) || !wp_verify_nonce($_POST['nonce'], 'maintenance-simulator-nonce')) {
+            error_log('Erreur de vérification du nonce');
             wp_send_json_error(array('message' => __('Erreur de sécurité. Veuillez rafraîchir la page.', 'maintenance-simulator')));
             exit;
         }
@@ -149,6 +171,7 @@ class Maintenance_Simulator {
         
         // Validation des points
         if ($points < 6 || $points > 18) {
+            error_log('Score invalide: ' . $points);
             wp_send_json_error(array('message' => __('Score invalide.', 'maintenance-simulator')));
             exit;
         }
